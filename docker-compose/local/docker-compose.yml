@@ -64,7 +64,7 @@ services:
       - ./init_data.json:/init_data.json
 
   lobe:
-    image: lobehub/lobe-chat-database
+    image: ning-lobe-chat-database-local
     container_name: lobe-chat
     network_mode: 'service:network-service'
     depends_on:
@@ -96,9 +96,7 @@ services:
 
 volumes:
   data:
-    driver: local
   s3_data:
-    driver: local
 
 networks:
   lobe-network:
