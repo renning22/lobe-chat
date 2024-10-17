@@ -7,7 +7,7 @@ services:
       - '${MINIO_PORT}:${MINIO_PORT}' # MinIO API
       - '9001:9001' # MinIO Console
       - '${CASDOOR_PORT}:${CASDOOR_PORT}' # Casdoor
-      - '${LOBE_PORT}:3210' # LobeChat
+      - '${LOBE_PORT}:${LOBE_PORT}' # LobeChat
     command: tail -f /dev/null
     networks:
       - lobe-network
@@ -18,7 +18,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - './data:/var/lib/postgresql/data'
+      - data:/var/lib/postgresql/data
     environment:
       - 'POSTGRES_DB=${LOBE_DB_NAME}'
       - 'POSTGRES_PASSWORD=${POSTGRES_PASSWORD}'
@@ -36,7 +36,7 @@ services:
     container_name: lobe-minio
     network_mode: 'service:network-service'
     volumes:
-      - './s3_data:/etc/minio/data'
+      - s3_data:/etc/minio/data
     environment:
       - 'MINIO_ROOT_USER=${MINIO_ROOT_USER}'
       - 'MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}'
@@ -78,12 +78,12 @@ services:
         condition: service_started
 
     environment:
-      - 'APP_URL=http://localhost:3210'
+      - 'APP_URL=http://gins.ai'
       - 'NEXT_AUTH_SSO_PROVIDERS=casdoor'
       - 'KEY_VAULTS_SECRET=Kix2wcUONd4CX51E/ZPAd36BqM4wzJgKjPtz2sGztqQ='
       - 'NEXT_AUTH_SECRET=NX2kaPE923dt6BL2U8e9oSre5RfoT7hg'
-      - 'AUTH_URL=http://localhost:${LOBE_PORT}/api/auth'
-      - 'AUTH_CASDOOR_ISSUER=http://localhost:${CASDOOR_PORT}'
+      - 'AUTH_URL=http://gins.ai/api/auth'
+      - 'AUTH_CASDOOR_ISSUER=http://gins.ai:${CASDOOR_PORT}'
       - 'DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgresql:5432/${LOBE_DB_NAME}'
       - 'S3_ENDPOINT=http://localhost:${MINIO_PORT}'
       - 'S3_BUCKET=${MINIO_LOBE_BUCKET}'
@@ -96,7 +96,9 @@ services:
 
 volumes:
   data:
+    name: "gins-lobe-data"
   s3_data:
+    name: "gins-lobe-s3-data"
 
 networks:
   lobe-network:

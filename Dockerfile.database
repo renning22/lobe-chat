@@ -144,7 +144,7 @@ ENV NODE_ENV="production" \
 
 # set hostname to localhost
 ENV HOSTNAME="0.0.0.0" \
-    PORT="3210"
+    PORT="8050"
 
 # General Variables
 ENV ACCESS_CODE="" \
