@@ -40,7 +40,7 @@ services:
     environment:
       - 'MINIO_ROOT_USER=${MINIO_ROOT_USER}'
       - 'MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}'
-      - 'MINIO_API_CORS_ALLOW_ORIGIN=http://localhost:${LOBE_PORT}'
+      - 'MINIO_API_CORS_ALLOW_ORIGIN=http://gins.ai'
     restart: always
     command: >
       server /etc/minio/data --address ":${MINIO_PORT}" --console-address ":9001"
@@ -58,7 +58,7 @@ services:
       RUNNING_IN_DOCKER: 'true'
       driverName: 'postgres'
       dataSourceName: 'user=postgres password=${POSTGRES_PASSWORD} host=postgresql port=5432 sslmode=disable dbname=casdoor'
-      origin: 'http://localhost:${CASDOOR_PORT}'
+      origin: 'http://gins.ai:${CASDOOR_PORT}'
       runmode: 'dev'
     volumes:
       - ./init_data.json:/init_data.json
@@ -85,9 +85,9 @@ services:
       - 'AUTH_URL=http://gins.ai/api/auth'
       - 'AUTH_CASDOOR_ISSUER=http://gins.ai:${CASDOOR_PORT}'
       - 'DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgresql:5432/${LOBE_DB_NAME}'
-      - 'S3_ENDPOINT=http://localhost:${MINIO_PORT}'
+      - 'S3_ENDPOINT=http://gins.ai:${MINIO_PORT}'
       - 'S3_BUCKET=${MINIO_LOBE_BUCKET}'
-      - 'S3_PUBLIC_DOMAIN=http://localhost:${MINIO_PORT}'
+      - 'S3_PUBLIC_DOMAIN=http://gins.ai:${MINIO_PORT}'
       - 'S3_ENABLE_PATH_STYLE=1'
       - 'LLM_VISION_IMAGE_USE_BASE64=1'
     env_file:
