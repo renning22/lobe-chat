@@ -40,7 +40,7 @@ services:
     environment:
       - 'MINIO_ROOT_USER=${MINIO_ROOT_USER}'
       - 'MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}'
-      - 'MINIO_API_CORS_ALLOW_ORIGIN=http://gins.ai'
+      - 'MINIO_API_CORS_ALLOW_ORIGIN=https://gins.ai'
     restart: always
     command: >
       server /etc/minio/data --address ":${MINIO_PORT}" --console-address ":9001"
@@ -58,7 +58,7 @@ services:
       RUNNING_IN_DOCKER: 'true'
       driverName: 'postgres'
       dataSourceName: 'user=postgres password=${POSTGRES_PASSWORD} host=postgresql port=5432 sslmode=disable dbname=casdoor'
-      origin: 'http://gins.ai:${CASDOOR_PORT}'
+      origin: 'https://auth.gins.ai'
       runmode: 'dev'
     volumes:
       - ./init_data.json:/init_data.json
@@ -78,16 +78,16 @@ services:
         condition: service_started
 
     environment:
-      - 'APP_URL=http://gins.ai'
+      - 'APP_URL=https://gins.ai'
       - 'NEXT_AUTH_SSO_PROVIDERS=casdoor'
       - 'KEY_VAULTS_SECRET=Kix2wcUONd4CX51E/ZPAd36BqM4wzJgKjPtz2sGztqQ='
       - 'NEXT_AUTH_SECRET=NX2kaPE923dt6BL2U8e9oSre5RfoT7hg'
-      - 'AUTH_URL=http://gins.ai/api/auth'
-      - 'AUTH_CASDOOR_ISSUER=http://gins.ai:${CASDOOR_PORT}'
+      - 'AUTH_URL=https://gins.ai/api/auth'
+      - 'AUTH_CASDOOR_ISSUER=https://auth.gins.ai'  # Reverse proxy to :8000
       - 'DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgresql:5432/${LOBE_DB_NAME}'
-      - 'S3_ENDPOINT=http://gins.ai:${MINIO_PORT}'
+      - 'S3_ENDPOINT=https://minio.gins.ai'  # Reverse proxy to :9000
       - 'S3_BUCKET=${MINIO_LOBE_BUCKET}'
-      - 'S3_PUBLIC_DOMAIN=http://gins.ai:${MINIO_PORT}'
+      - 'S3_PUBLIC_DOMAIN=https://minio.gins.ai'
       - 'S3_ENABLE_PATH_STYLE=1'
       - 'LLM_VISION_IMAGE_USE_BASE64=1'
     env_file:

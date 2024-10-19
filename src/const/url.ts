@@ -9,9 +9,9 @@ import { INBOX_SESSION_ID } from './session';
 
 export const UTM_SOURCE = 'chat_preview';
 
-export const OFFICIAL_URL = 'http://gins.ai/';
-export const OFFICIAL_PREVIEW_URL = 'http://gins.ai/';
-export const OFFICIAL_SITE = 'http://gins.ai/';
+export const OFFICIAL_URL = 'https://gins.ai/';
+export const OFFICIAL_PREVIEW_URL = 'https://gins.ai/';
+export const OFFICIAL_SITE = 'https://gins.ai/';
 
 export const OG_URL = '/og/cover.png?v=1';
 
@@ -61,8 +61,8 @@ export const SESSION_CHAT_URL = (id: string = INBOX_SESSION_ID, mobile?: boolean
 export const imageUrl = (filename: string) => withBasePath(`/images/${filename}`);
 
 export const LOBE_URL_IMPORT_NAME = 'settings';
-export const EMAIL_SUPPORT = 'support@gins.ai';
-export const EMAIL_BUSINESS = 'hello@gins.ai';
+export const EMAIL_SUPPORT = 'founders@finae.ai';
+export const EMAIL_BUSINESS = 'founders@finae.ai';
 
 export const MEDIDUM = 'https://medium.com/@lobehub';
 export const X = 'https://x.com/lobehub';
